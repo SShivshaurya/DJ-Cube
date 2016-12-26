@@ -1,0 +1,20 @@
+What is DJ Cube…?
+It is a smart cube capable of performing multiple
+ music actions like mixing of songs, changing of songs etc. It is the coolest DJ ever. It is full of attraction and innovation.
+-------------------------------------------------------------------
+Problem Statement
+As we know that in previous era we were using
+ big analog multiplexers whose main disadvantages are-
+High Cost
+Difficult to use
+Difficult to transport
+-------------------------------------------------------------------
+Our Solution
+We are here with a cost effective solution through which we want to digitalize the music world.
+ It is possible with the use of image processing tools  (Reactivision) and with the help of fiducial markers.
+ With the help of these we can easily perform all the   tasks which are previously done by the analog multiplexers.
+-------------------------------------------------------------------
+Technology Used
+Image Processing Technique is used to detect the marker id which will play the song stored at that location .
+ As the camera capture the id a particular song starts and as the id moves from the frame the song automatically stops.   
+--------------------------------------------------------------------
