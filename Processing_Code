@@ -1,0 +1,228 @@
+import TUIO.*;
+import ddf.minim.*;
+TuioProcessing tuioClient;
+Minim minim;
+AudioSnippet player;
+AudioSnippet player1;
+AudioSnippet player2;
+AudioSnippet player3;
+AudioSnippet player4;
+AudioSnippet player5;
+AudioSnippet player6;
+AudioSnippet player7;
+AudioSnippet player8;
+AudioSnippet player9;
+AudioSnippet player21;
+float cursor_size = 15;
+float object_size = 60;
+float table_size = 760;
+float scale_factor = 1;
+PFont font;
+void setup()
+{
+  size(720,640);
+  noStroke();
+  fill(0);
+  loop();
+  frameRate(30);
+  //noLoop();
+  hint(ENABLE_NATIVE_FONTS);
+  font = createFont("Arial", 18);
+  scale_factor = height/table_size;
+  tuioClient  = new TuioProcessing(this);
+  minim = new Minim(this);
+player  = minim.loadSnippet("a0.mp3");
+player1 = minim.loadSnippet("a1.mp3");
+player2 = minim.loadSnippet("a2.mp3");
+player3 = minim.loadSnippet("a3.mp3");
+player4 = minim.loadSnippet("a4.mp3");
+player5 = minim.loadSnippet("a5.mp3");
+player6 = minim.loadSnippet("a6.mp3");
+player7 = minim.loadSnippet("a7.mp3");
+player8 = minim.loadSnippet("a8.mp3");
+player9 = minim.loadSnippet("a9.mp3");
+player21 = minim.loadSnippet("a10.mp3");
+}
+void draw()
+{
+  background(255);
+  textFont(font,18*scale_factor);
+  float obj_size = object_size*scale_factor; 
+  float cur_size = cursor_size*scale_factor;  
+  Vector tuioObjectList = tuioClient.getTuioObjects();
+  for (int i=0;i<tuioObjectList.size();i++) {
+     TuioObject tobj = (TuioObject)tuioObjectList.elementAt(i);
+     stroke(0);
+     fill(0);
+     pushMatrix();
+     translate(tobj.getScreenX(width),tobj.getScreenY(height));
+     rotate(tobj.getAngle());
+     rect(-obj_size/2,-obj_size/2,obj_size,obj_size);
+     popMatrix();
+     fill(255);
+     text(""+tobj.getSymbolID(), tobj.getScreenX(width), tobj.getScreenY(height));
+      if(tobj.getSymbolID()==0)
+ {
+  player.play();
+ }if (!player.isPlaying()) { 
+player.rewind();
+//player.pause();
+}
+if(tobj.getSymbolID()==1)
+ {
+  player1.play();
+ }if (!player1.isPlaying()) { 
+player1.rewind();
+//player1.pause();
+}
+if(tobj.getSymbolID()==2)
+ {
+  player2.play();
+ }if (!player2.isPlaying()) { 
+player2.rewind();
+//player2.pause();
+}
+if(tobj.getSymbolID()==3)
+ {
+  player6.play();
+ }if (!player6.isPlaying()) { 
+player6.rewind();
+}
+
+if(tobj.getSymbolID()==4)
+ {
+  player3.play();
+ }if (!player3.isPlaying()) { 
+player3.rewind();
+//player3.pause();
+}
+if(tobj.getSymbolID()==5)
+ {
+  player4.play();
+ }if (!player4.isPlaying()) { 
+player4.rewind();
+//player4.pause();
+}
+if(tobj.getSymbolID()==6)
+ {
+  player7.play();
+ }if (!player7.isPlaying()) { 
+player7.rewind();
+//player7.pause();
+}
+if(tobj.getSymbolID()==7)
+ {
+  player5.play();
+ }if (!player5.isPlaying()) { 
+player5.rewind();
+//player5.pause();
+}
+if(tobj.getSymbolID()==8)
+ {
+  player8.play();
+ }if (!player8.isPlaying()) { 
+player8.rewind();
+//player8.pause();
+}
+if(tobj.getSymbolID()==9)
+ {
+  player9.play();
+ }if (!player9.isPlaying()) { 
+player9.rewind();
+//player9.pause();
+}
+if(tobj.getSymbolID()==21)
+ {
+  player21.play();
+ }if (!player21.isPlaying()) { 
+player21.rewind();
+//player10.pause();
+}
+ }
+    Vector tuioCursorList = tuioClient.getTuioCursors();
+   for (int i=0;i<tuioCursorList.size();i++) {
+      TuioCursor tcur = (TuioCursor)tuioCursorList.elementAt(i);
+      Vector pointList = tcur.getPath();
+       if (pointList.size()>0) {
+        stroke(0,0,255);
+        TuioPoint start_point = (TuioPoint)pointList.firstElement();;
+        for (int j=0;j<pointList.size();j++) {
+           TuioPoint end_point = (TuioPoint)pointList.elementAt(j);
+           line(start_point.getScreenX(width),start_point.getScreenY(height),end_point.getScreenX(width),end_point.getScreenY(height));
+           start_point = end_point;
+        }
+        stroke(192,192,192);
+        fill(192,192,192);
+        ellipse( tcur.getScreenX(width), tcur.getScreenY(height),cur_size,cur_size);
+        fill(0);
+        text(""+ tcur.getCursorID(),  tcur.getScreenX(width)-5,  tcur.getScreenY(height)+5);
+      }
+   }
+}
+void addTuioObject(TuioObject tobj) {
+  println("add object "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" "+tobj.getAngle());
+}
+void removeTuioObject(TuioObject tobj) {
+  println("remove object "+tobj.getSymbolID()+" ("+tobj.getSessionID()+")");
+  if(tobj.getSymbolID()==0)
+ {
+ player.pause();
+ }
+  if(tobj.getSymbolID()==1)
+ {
+ player1.pause();
+ }
+  if(tobj.getSymbolID()==2)
+ {
+ player2.pause();
+ }
+ if(tobj.getSymbolID()==3)
+ {
+ player6.pause();
+ }
+ if(tobj.getSymbolID()==6)
+ {
+ player7.pause();
+ }
+  if(tobj.getSymbolID()==4)
+ {
+ player3.pause();
+ }
+  if(tobj.getSymbolID()==5)
+ {
+ player4.pause();
+ }
+  if(tobj.getSymbolID()==7)
+ {
+ player5.pause();
+ }
+ if(tobj.getSymbolID()==8)
+ {
+ player8.pause();
+ }
+ if(tobj.getSymbolID()==9)
+ {
+ player9.pause();
+ }
+ if(tobj.getSymbolID()==21)
+ {
+ player21.pause();
+ }
+}
+void updateTuioObject (TuioObject tobj) {
+  println("update object "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" "+tobj.getAngle()
+          +" "+tobj.getMotionSpeed()+" "+tobj.getRotationSpeed()+" "+tobj.getMotionAccel()+" "+tobj.getRotationAccel());
+}
+void addTuioCursor(TuioCursor tcur) {
+  println("add cursor "+tcur.getCursorID()+" ("+tcur.getSessionID()+ ") " +tcur.getX()+" "+tcur.getY());
+}
+void updateTuioCursor (TuioCursor tcur) {
+  println("update cursor "+tcur.getCursorID()+" ("+tcur.getSessionID()+ ") " +tcur.getX()+" "+tcur.getY()
+          +" "+tcur.getMotionSpeed()+" "+tcur.getMotionAccel());
+}
+void removeTuioCursor(TuioCursor tcur) {
+  println("remove cursor "+tcur.getCursorID()+" ("+tcur.getSessionID()+")");
+}
+void refresh(TuioTime bundleTime) { 
+  redraw();
+}
